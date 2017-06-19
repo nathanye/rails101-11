@@ -23,8 +23,25 @@ class PostsController < ApplicationController
       redirect_to group_path(@group)
     else
       render :new
+    end
   end
-end
+
+  def update
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      redirect_to account_posts_path, notice: "更新成功！"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+      redirect_to account_posts_path, alert: "文章已删除！"
+  end
 
 private
 
